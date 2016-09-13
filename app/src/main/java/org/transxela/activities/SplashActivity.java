@@ -1,7 +1,9 @@
-package org.transxela;
+package org.transxela.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import org.transxela.R;
 
 public class SplashActivity extends AppCompatActivity {
 
