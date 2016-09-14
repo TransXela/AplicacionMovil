@@ -1,5 +1,6 @@
 package org.transxela.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +20,7 @@ import org.transxela.fragments.FragmentTrafico;
 /**
  * Created by pblinux on 12/09/16.
  */
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
+public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -38,36 +39,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         tabLayout = (TabLayout) findViewById(R.id.mainTab);
         tabLayout.setupWithViewPager(tabViewPager);
         setupTabIcons();
-        tabViewPager.addOnPageChangeListener(this);
         buttonNewDenuncia = (FloatingActionButton) findViewById(R.id.buttonNewDenuncia);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        switch (position) {
-            case 0:
-                buttonNewDenuncia.show();
-                break;
-            case 1:
-                buttonNewDenuncia.show();
-                break;
-            case 3:
-                buttonNewDenuncia.hide();
-                break;
-            default:
-                buttonNewDenuncia.hide();
-                break;
-        }
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 
     private void setupTabIcons() {

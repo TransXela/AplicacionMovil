@@ -44,7 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="end|bottom"
+        android:background="?android:attr/selectableItemBackground"
         android:src="@mipmap/ic_add_white_24dp"
+        android:clickable="true"
         app:borderWidth="0dp" />
 
 </android.support.design.widget.CoordinatorLayout>
