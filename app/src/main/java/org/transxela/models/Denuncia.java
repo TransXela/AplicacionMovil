@@ -16,6 +16,10 @@ public class Denuncia implements Serializable {
     /*Archivo_adjunto*/
     private String Path_Imagen;
 
+    /*hora y fecha servidor*/
+    private String Hora;
+    private String Fecha;
+
     public Denuncia() {
     }
 
@@ -38,4 +42,19 @@ public class Denuncia implements Serializable {
 
     }
 
+    public String getHora() {
+        return Hora;
+    }
+
+    public String getFecha() {
+        return Fecha;
+    }
+
+    public String getPath_Imagen() {
+        return Path_Imagen;
+    }
+
+    public String getTipo_Denuncia() {
+        return Tipo_Denuncia;
+    }
 }
