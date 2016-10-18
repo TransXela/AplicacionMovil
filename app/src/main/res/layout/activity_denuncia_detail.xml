@@ -12,61 +12,88 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:layout_weight="0"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="15dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center">
 
-        <ImageView
+        <TextView
+            android:id="@+id/denunciaDateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha: "
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/denunciaDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/denunciaDateLabel"
+            android:fontFamily="sans-serif-black"
+            android:text="12-05-16"
+            android:textSize="25dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/denunciaTypeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo: "
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/denunciaType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/denunciaTypeLabel"
+            android:fontFamily="sans-serif-black"
+            android:text="Cobro ilegal"
+            android:textSize="25dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center">
+
+        <TextView
             android:id="@+id/denunciaStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentTop="true"
-            android:src="@mipmap/ic_check_white_24dp"
-            android:tint="#00E676" />
+            android:layout_alignLeft="@+id/denunciaStatusLabel"
+            android:layout_alignRight="@+id/denunciaStatusLabel"
+            android:gravity="center"
+            android:text="@string/fa_icon_reported"
+            android:textSize="55sp"
+            android:textColor="@color/fbutton_color_green_sea"/>
 
         <TextView
-            android:id="@+id/denunciaTitle"
+            android:id="@+id/denunciaStatusLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/denunciaStatus"
-            android:fontFamily="sans-serif-light"
-            android:text="Mi denuncia"
-            android:textSize="35dp"
-            android:layout_centerVertical="true"/>
+            android:layout_below="@id/denunciaStatus"
+            android:text="Reportado"
+            android:textSize="30sp"
+            android:textColor="@color/fbutton_color_green_sea"
+            android:fontFamily="sans-serif-black"/>
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/denunciaDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/denunciaTitle"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="sans-serif-black"
-        android:text="12-05-16"
-        android:textSize="25dp"/>
-    <TextView
-        android:id="@+id/denunciaType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Cobro ilegal"
-        android:textSize="25dp"/>
-    <TextView
-        android:id="@+id/denunciaStatusText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Reportado"
-        android:textSize="25dp"/>
 
 </LinearLayout>

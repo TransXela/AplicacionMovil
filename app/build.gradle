@@ -30,4 +30,6 @@ dependencies {
     compile 'com.github.florent37:materialtextfield:1.0.6'
     compile 'com.jaredrummler:material-spinner:1.1.0'
     compile 'info.hoang8f:fbutton:1.0.5'
+    //Maps
+    compile 'com.google.android.gms:play-services:9.6.1'
 }
