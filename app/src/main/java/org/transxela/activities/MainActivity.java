@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(this, DenunciaDetailActivity.class));
+        startActivity(new Intent(this, DenunciaActivity.class));
     }
 
     private void setupTabIcons() {

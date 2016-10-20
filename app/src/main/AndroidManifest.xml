@@ -25,6 +25,7 @@
         <activity android:name=".activities.MainActivity"/>
         <activity android:name=".activities.DenunciaActivity"/>
         <activity android:name=".activities.DenunciaDetailActivity"/>
+        <activity android:name=".activities.SetLocationActivity"/>
     </application>
 
 </manifest>

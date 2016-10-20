@@ -1,5 +1,6 @@
 package org.transxela.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -24,9 +26,10 @@ import info.hoang8f.widget.FButton;
 /**
  * Created by pblinux on 14/09/16.
  */
-public class DenunciaActivity extends AppCompatActivity {
+public class DenunciaActivity extends AppCompatActivity implements Button.OnClickListener {
 
     private static String[] SPINNERLIST = {"C", "P", "A"};
+    private final static int LOCATION = 1;
 
     private Toolbar toolbar;
 
@@ -54,10 +57,12 @@ public class DenunciaActivity extends AppCompatActivity {
         getLocationButton = (FButton) findViewById(R.id.getLocationButton);
         getLocationButton.setButtonColor(getResources().getColor(R.color.colorPrimary));
         getLocationButton.setShadowColor(getResources().getColor(R.color.baseBackgroud));
+        getLocationButton.setOnClickListener(this);
 
         setLocationButton = (FButton) findViewById(R.id.setLocationButton);
         setLocationButton.setButtonColor(getResources().getColor(R.color.colorPrimary));
         setLocationButton.setShadowColor(getResources().getColor(R.color.baseBackgroud));
+        setLocationButton.setOnClickListener(this);
     }
 
     @Override
@@ -70,6 +75,18 @@ public class DenunciaActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.getLocationButton:
+                return;
+            case R.id.setLocationButton:
+                //startActivityForResult(new Intent(getApplicationContext(), SetLocationActivity.class), LOCATION);
+                startActivity(new Intent(getApplicationContext(), SetLocationActivity.class));
+                return;
+        }
     }
 
     /*Drawable icon = getResources().getDrawable(R.mipmap.ic_directions_bus_white_24dp);
