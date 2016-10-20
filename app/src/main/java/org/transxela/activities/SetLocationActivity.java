@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -34,10 +36,16 @@ public class SetLocationActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        LatLngBounds bounds = new LatLngBounds(new LatLng(14.861550, -91.553889), new LatLng(14.865253, -91.468920));
-        googleMap.setMinZoomPreference(10.0f);
-        googleMap.setMaxZoomPreference(17.0f);
-        googleMap.setLatLngBoundsForCameraTarget(bounds);
+        //LatLngBounds bounds = new LatLngBounds(new LatLng(-15.0, 165.0), new LatLng(15.0, -165.0));
+        LatLngBounds XELA = new LatLngBounds(
+                new LatLng(14.86, -91.56), new LatLng(14.88, -91.46));
+        CameraPosition XELA_CAMERA = new CameraPosition.Builder()
+                .target(new LatLng(14.844875, -91.523197)).zoom(18.0f).bearing(0).tilt(0).build();
+        //googleMap.setMinZoomPreference(13.5f);
+        //googleMap.setMaxZoomPreference(20.0f);
+        googleMap.setLatLngBoundsForCameraTarget(XELA);
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(XELA_CAMERA));
+
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
