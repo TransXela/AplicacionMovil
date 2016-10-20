@@ -6,4 +6,7 @@
     <!--Tab-->
     <dimen name="tab_layout_height">72dp</dimen>
     <dimen name="tab_label">14sp</dimen>
+
+    <!--Edittext-->
+    <dimen name="edittext_numero_width">195dp</dimen>
 </resources>

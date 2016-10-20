@@ -7,8 +7,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.transxela.R;
@@ -20,7 +24,7 @@ import org.transxela.fragments.FragmentTrafico;
 /**
  * Created by pblinux on 12/09/16.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -40,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(tabViewPager);
         setupTabIcons();
         buttonNewDenuncia = (FloatingActionButton) findViewById(R.id.buttonNewDenuncia);
+        buttonNewDenuncia.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        startActivity(new Intent(this, DenunciaActivity.class));
     }
 
     private void setupTabIcons() {
