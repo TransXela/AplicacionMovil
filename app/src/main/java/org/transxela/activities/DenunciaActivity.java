@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -34,15 +35,19 @@ import org.transxela.api.Endpoints;
 import org.transxela.models.Denuncia;
 import org.transxela.models.wrappers.DenunciaWrapper;
 
+import java.util.Arrays;
+import java.util.List;
+
 import info.hoang8f.widget.FButton;
 
 
 /**
  * Created by pblinux on 14/09/16.
  */
-public class DenunciaActivity extends AppCompatActivity implements Button.OnClickListener {
+public class DenunciaActivity extends AppCompatActivity implements Button.OnClickListener{
 
-    private static String[] SPINNERLIST = {"C", "P", "A"};
+    private static List<String> SPINNERLIST = Arrays.asList("C", "P", "A");
+    private static List<String> DENUNCIASLIST = Arrays.asList("Cobro Ilegal", "Unidad en mal estado", "Malos tratos" ,"Conduccion Temeraria","Unidad en sobrecargada");
     private final static int LOCATION = 1;
 
     private Toolbar toolbar;
@@ -50,6 +55,12 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
     private MaterialSpinner placaType;
     private FButton getLocationButton, setLocationButton;
     private SharedPreferences preferences;
+    private Denuncia denuncia;
+
+    private AppCompatEditText placaNumber, denunciaDescription;
+    private MaterialSpinner denunciaType;
+    private float longitud=-118.453987f, latitud=81.0003425f;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +77,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
             }
         });
         placaType = (MaterialSpinner) findViewById(R.id.placaType);
-        placaType.setItems("C", "P", "A");
+        placaType.setItems(SPINNERLIST);
         placaType.setSelectedIndex(0);
 
         getLocationButton = (FButton) findViewById(R.id.getLocationButton);
@@ -78,7 +89,12 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         setLocationButton.setButtonColor(getResources().getColor(R.color.colorPrimary));
         setLocationButton.setShadowColor(getResources().getColor(R.color.baseBackgroud));
         setLocationButton.setOnClickListener(this);
-        preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        placaNumber= (AppCompatEditText) findViewById(R.id.placaNumber);
+        denunciaDescription=(AppCompatEditText) findViewById(R.id.denunciaDescription);
+        denunciaType= (MaterialSpinner) findViewById(R.id.denunciaType);
+        denunciaType.setItems(DENUNCIASLIST);
+        denunciaType.setSelectedIndex(0);
     }
 
     @Override
@@ -90,22 +106,23 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.newDenuncia:
+               /* try {
+                    obtenerDatos();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }*/
+                Log.d("mensaje", "si funciona");
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.getLocationButton:
-                Denuncia denuncia = new Denuncia("holi",1,"holi2",17.898f,19.456f);
-                try {
-                    JSONObject funciona = new JSONObject("{\"denuncia\":{\"descripcion\":\"holi2\",\"latitud\":17.898,\"longitud\":19.456,\"placa\":\"holi\",\"tipodenuncia\":1}}");
-
-                    Log.d("holis",funciona.toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                createDenucnia(denuncia);
                 return;
             case R.id.setLocationButton:
                 //startActivityForResult(new Intent(getApplicationContext(), SetLocationActivity.class), LOCATION);
@@ -114,24 +131,33 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         }
     }
 
-   private void createDenucnia(Denuncia denuncia){
-       String body= new DenunciaWrapper(denuncia,preferences.getString("imei","000000")).ToJson();
-       Log.d("prueba: ",body);
-       /*AndroidNetworking.post(Endpoints.POSTDENUNCIA)
+    private void createDenucnia(Denuncia denuncia) throws JSONException {
+        String body = new DenunciaWrapper(denuncia, preferences.getString("imei", "000000")).ToJson();
+        AndroidNetworking.post(Endpoints.POSTDENUNCIA)
                .addHeaders("Content-Type","application/json")
-               .addJSONObjectBody(new JSONObject(""))
-
+               .addJSONObjectBody(new JSONObject(body))
                .setPriority(Priority.MEDIUM)
                .build()
                .getAsJSONObject(new JSONObjectRequestListener() {
                    @Override
                    public void onResponse(JSONObject response) {
                        // do anything with response
+                       Log.d("resouesta",response.toString());
                    }
                    @Override
                    public void onError(ANError error) {
                        // handle error
                    }
-               });*/
-   }
+               });
+    }
+
+    private void obtenerDatos() throws JSONException {
+        String Placa= SPINNERLIST.get(placaType.getSelectedIndex())+placaNumber.getText();
+        int tipo= denunciaType.getSelectedIndex();
+        String Descripcion= denunciaDescription.getText().toString();
+        Denuncia denuncia= new Denuncia(Placa,tipo,Descripcion,latitud,longitud);
+        createDenucnia(denuncia);
+    }
+
+
 }
