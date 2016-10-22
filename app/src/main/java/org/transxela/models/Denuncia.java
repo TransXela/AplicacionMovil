@@ -7,54 +7,87 @@ import java.io.Serializable;
  */
 public class Denuncia implements Serializable {
     /*Principal*/
-    private String Numero_Placa;
-    private String Tipo_Denuncia;
-    private String Descripcion;
+    private String placa;
+    private int tipodenuncia;
+    private String descripcion;
     /*Ubicacion*/
-    private String Latitud;
-    private String Longiud;
+    private float latitud;
+    private float longiud;
     /*Archivo_adjunto*/
-    private String Path_Imagen;
+   // private String Path_Imagen;
 
     /*hora y fecha servidor*/
-    private String Hora;
-    private String Fecha;
+    private String fechahora;
+    private int estado;
+
 
     public Denuncia() {
     }
 
-    public Denuncia(String tipo_Denuncia, String numero_Placa, String descripcion, String longiud, String path_Imagen, String latitud) {
-        Tipo_Denuncia = tipo_Denuncia;
-        Numero_Placa = numero_Placa;
-        Descripcion = descripcion;
-        Longiud = longiud;
-        Path_Imagen = path_Imagen;
-        Latitud = latitud;
+    public Denuncia(String placa, int tipodenuncia, String descripcion, float latitud, float longiud, String fechahora, int estado) {
+        this.placa = placa;
+        this.tipodenuncia = tipodenuncia;
+        this.descripcion = descripcion;
+        this.latitud = latitud;
+        this.longiud = longiud;
+        this.fechahora = fechahora;
+        this.estado = estado;
     }
 
-    /*POST*/
-    public void Insert (String IMEI){
 
+    public String getPlaca() {
+        return placa;
     }
 
-    /*GET*/
-    public void Get_Denuncia (){
-
+    public int getTipodenuncia() {
+        return tipodenuncia;
     }
 
-    public String getHora() {
-        return Hora;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public String getFecha() {
-        return Fecha;
+    public float getLatitud() {
+        return latitud;
     }
 
-    public String getPath_Imagen() {
-        return Path_Imagen;
+    public float getLongiud() {
+        return longiud;
     }
 
-    public String getTipo_Denuncia() {
-        return Tipo_Denuncia;
+    public String getFechahora() {
+        return fechahora;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public void setTipodenuncia(int tipodenuncia) {
+        this.tipodenuncia = tipodenuncia;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setLatitud(float latitud) {
+        this.latitud = latitud;
+    }
+
+    public void setLongiud(float longiud) {
+        this.longiud = longiud;
+    }
+
+    public void setFechahora(String fechahora) {
+        this.fechahora = fechahora;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 }
