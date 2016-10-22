@@ -14,13 +14,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
+        <TextView
             android:id="@+id/denunciaStatus"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/ic_check_white_24dp"
-            android:tint="#00E676" />
+            android:gravity="center"
+            android:text="@string/fa_icon_reported"
+            android:textSize="55sp"
+            android:textColor="#00E676" />
 
         <RelativeLayout
             android:id="@+id/denunciaContainer"
