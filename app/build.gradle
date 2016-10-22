@@ -32,4 +32,7 @@ dependencies {
     compile 'info.hoang8f:fbutton:1.0.5'
     //Maps
     compile 'com.google.android.gms:play-services:9.6.1'
+    //HTTP
+    compile 'com.amitshekhar.android:android-networking:0.2.0'
+    compile 'com.amitshekhar.android:jackson-android-networking:0.2.0'
 }
