@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.transxela">
+
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+
     <application
         android:name=".TransxelaApplication"
         android:allowBackup="true"
@@ -12,10 +14,11 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDePA_ZiTFnu6975Iv8nMFwoBMowlEWfEU"/>
+            android:value="AIzaSyDePA_ZiTFnu6975Iv8nMFwoBMowlEWfEU" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".activities.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -24,10 +27,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity"/>
-        <activity android:name=".activities.DenunciaActivity"/>
-        <activity android:name=".activities.DenunciaDetailActivity"/>
-        <activity android:name=".activities.SetLocationActivity"/>
+        <activity android:name=".activities.MainActivity" />
+        <activity
+            android:name=".activities.DenunciaActivity"
+            android:fitsSystemWindows="true"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".activities.DenunciaDetailActivity" />
+        <activity android:name=".activities.SetLocationActivity" />
     </application>
 
 </manifest>

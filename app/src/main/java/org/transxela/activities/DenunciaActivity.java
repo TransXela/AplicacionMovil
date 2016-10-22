@@ -18,7 +18,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,10 +46,10 @@ import info.hoang8f.widget.FButton;
 /**
  * Created by pblinux on 14/09/16.
  */
-public class DenunciaActivity extends AppCompatActivity implements Button.OnClickListener{
+public class DenunciaActivity extends AppCompatActivity implements Button.OnClickListener {
 
     private static List<String> SPINNERLIST = Arrays.asList("C", "P", "A");
-    private static List<String> DENUNCIASLIST = Arrays.asList("Cobro Ilegal", "Unidad en mal estado", "Malos tratos" ,"Conduccion Temeraria","Unidad en sobrecargada");
+    private static List<String> DENUNCIASLIST = Arrays.asList("Cobro Ilegal", "Unidad en mal estado", "Malos tratos", "Conduccion Temeraria", "Unidad en sobrecargada");
     private final static int LOCATION = 1;
 
     private Toolbar toolbar;
@@ -57,9 +59,10 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
     private SharedPreferences preferences;
     private Denuncia denuncia;
 
-    private AppCompatEditText placaNumber, denunciaDescription;
+    private AppCompatEditText placaNumber;
+    private EditText denunciaDescription;
     private MaterialSpinner denunciaType;
-    private float longitud=-118.453987f, latitud=81.0003425f;
+    private float longitud = -118.453987f, latitud = 81.0003425f;
 
 
     @Override
@@ -69,6 +72,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         toolbar = (Toolbar) findViewById(R.id.denunciaToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Nueva Denuncia");
+        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,9 +94,10 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         setLocationButton.setShadowColor(getResources().getColor(R.color.baseBackgroud));
         setLocationButton.setOnClickListener(this);
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        placaNumber= (AppCompatEditText) findViewById(R.id.placaNumber);
-        denunciaDescription=(AppCompatEditText) findViewById(R.id.denunciaDescription);
-        denunciaType= (MaterialSpinner) findViewById(R.id.denunciaType);
+
+        placaNumber = (AppCompatEditText) findViewById(R.id.placaNumber);
+        denunciaDescription = (EditText) findViewById(R.id.denunciaDescription);
+        denunciaType = (MaterialSpinner) findViewById(R.id.denunciaType);
         denunciaType.setItems(DENUNCIASLIST);
         denunciaType.setSelectedIndex(0);
     }
@@ -108,15 +113,14 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.newDenuncia:
-               /* try {
-                    obtenerDatos();
+                try {
+                    createDenuncia();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }*/
-                Log.d("mensaje", "si funciona");
+                }
+                return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
@@ -131,33 +135,32 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         }
     }
 
-    private void createDenucnia(Denuncia denuncia) throws JSONException {
+    private void createDenuncia() throws JSONException {
+        String placa = SPINNERLIST.get(placaType.getSelectedIndex()) + placaNumber.getText();
+        int tipo = denunciaType.getSelectedIndex();
+        String descripcion = denunciaDescription.getText().toString();
+        Denuncia denuncia = new Denuncia(placa, tipo, descripcion, latitud, longitud);
+        makeRequest(denuncia);
+    }
+
+    private void makeRequest(Denuncia denuncia) throws JSONException {
         String body = new DenunciaWrapper(denuncia, preferences.getString("imei", "000000")).ToJson();
         AndroidNetworking.post(Endpoints.POSTDENUNCIA)
-               .addHeaders("Content-Type","application/json")
-               .addJSONObjectBody(new JSONObject(body))
-               .setPriority(Priority.MEDIUM)
-               .build()
-               .getAsJSONObject(new JSONObjectRequestListener() {
-                   @Override
-                   public void onResponse(JSONObject response) {
-                       // do anything with response
-                       Log.d("resouesta",response.toString());
-                   }
-                   @Override
-                   public void onError(ANError error) {
-                       // handle error
-                   }
-               });
+                .addHeaders("Content-Type", "application/json")
+                .addJSONObjectBody(new JSONObject(body))
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        Log.d("respuesta", response.toString());
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                    }
+                });
     }
-
-    private void obtenerDatos() throws JSONException {
-        String Placa= SPINNERLIST.get(placaType.getSelectedIndex())+placaNumber.getText();
-        int tipo= denunciaType.getSelectedIndex();
-        String Descripcion= denunciaDescription.getText().toString();
-        Denuncia denuncia= new Denuncia(Placa,tipo,Descripcion,latitud,longitud);
-        createDenucnia(denuncia);
-    }
-
-
 }
