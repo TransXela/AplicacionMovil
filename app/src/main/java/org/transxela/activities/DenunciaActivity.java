@@ -89,14 +89,5 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         }
     }
 
-    /*Drawable icon = getResources().getDrawable(R.mipmap.ic_directions_bus_white_24dp);
-                icon = DrawableCompat.wrap(icon);
-                if(hasFocus){
-                    DrawableCompat.setTint(icon, Color.RED);
-                    Toast.makeText(getApplicationContext(), "Focus", Toast.LENGTH_SHORT).show();
-                } else {
-                    DrawableCompat.setTint(icon, Color.BLUE);
-                    Toast.makeText(getApplicationContext(), "No", Toast.LENGTH_SHORT).show();
-                }
-                ((AppCompatEditText)v).setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);*/
+
 }
