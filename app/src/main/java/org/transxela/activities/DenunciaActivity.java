@@ -1,14 +1,19 @@
 package org.transxela.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,9 +21,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.transxela.R;
+import org.transxela.api.Endpoints;
+import org.transxela.models.Denuncia;
+import org.transxela.models.wrappers.DenunciaWrapper;
 
 import info.hoang8f.widget.FButton;
 
@@ -35,6 +49,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
 
     private MaterialSpinner placaType;
     private FButton getLocationButton, setLocationButton;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +78,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         setLocationButton.setButtonColor(getResources().getColor(R.color.colorPrimary));
         setLocationButton.setShadowColor(getResources().getColor(R.color.baseBackgroud));
         setLocationButton.setOnClickListener(this);
+        preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     }
 
     @Override
@@ -81,6 +97,15 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.getLocationButton:
+                Denuncia denuncia = new Denuncia("holi",1,"holi2",17.898f,19.456f);
+                try {
+                    JSONObject funciona = new JSONObject("{\"denuncia\":{\"descripcion\":\"holi2\",\"latitud\":17.898,\"longitud\":19.456,\"placa\":\"holi\",\"tipodenuncia\":1}}");
+
+                    Log.d("holis",funciona.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                createDenucnia(denuncia);
                 return;
             case R.id.setLocationButton:
                 //startActivityForResult(new Intent(getApplicationContext(), SetLocationActivity.class), LOCATION);
@@ -89,14 +114,24 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         }
     }
 
-    /*Drawable icon = getResources().getDrawable(R.mipmap.ic_directions_bus_white_24dp);
-                icon = DrawableCompat.wrap(icon);
-                if(hasFocus){
-                    DrawableCompat.setTint(icon, Color.RED);
-                    Toast.makeText(getApplicationContext(), "Focus", Toast.LENGTH_SHORT).show();
-                } else {
-                    DrawableCompat.setTint(icon, Color.BLUE);
-                    Toast.makeText(getApplicationContext(), "No", Toast.LENGTH_SHORT).show();
-                }
-                ((AppCompatEditText)v).setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);*/
+   private void createDenucnia(Denuncia denuncia){
+       String body= new DenunciaWrapper(denuncia,preferences.getString("imei","000000")).ToJson();
+       Log.d("prueba: ",body);
+       /*AndroidNetworking.post(Endpoints.POSTDENUNCIA)
+               .addHeaders("Content-Type","application/json")
+               .addJSONObjectBody(new JSONObject(""))
+
+               .setPriority(Priority.MEDIUM)
+               .build()
+               .getAsJSONObject(new JSONObjectRequestListener() {
+                   @Override
+                   public void onResponse(JSONObject response) {
+                       // do anything with response
+                   }
+                   @Override
+                   public void onError(ANError error) {
+                       // handle error
+                   }
+               });*/
+   }
 }

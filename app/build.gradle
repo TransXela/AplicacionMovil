@@ -34,5 +34,4 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.6.1'
     //HTTP
     compile 'com.amitshekhar.android:android-networking:0.2.0'
-    compile 'com.amitshekhar.android:jackson-android-networking:0.2.0'
 }

@@ -12,28 +12,35 @@ public class Denuncia implements Serializable {
     private String descripcion;
     /*Ubicacion*/
     private float latitud;
-    private float longiud;
+    private float longitud;
     /*Archivo_adjunto*/
    // private String Path_Imagen;
 
     /*hora y fecha servidor*/
     private String fechahora;
-    private int estado;
+    private Integer estado = null;
 
 
     public Denuncia() {
     }
 
-    public Denuncia(String placa, int tipodenuncia, String descripcion, float latitud, float longiud, String fechahora, int estado) {
+    public Denuncia(String placa, int tipodenuncia, String descripcion, float latitud, float longitud, String fechahora, int estado) {
         this.placa = placa;
         this.tipodenuncia = tipodenuncia;
         this.descripcion = descripcion;
         this.latitud = latitud;
-        this.longiud = longiud;
+        this.longitud= longitud;
         this.fechahora = fechahora;
         this.estado = estado;
     }
 
+    public Denuncia(String placa, int tipodenuncia, String descripcion, float latitud, float longitud) {
+        this.placa = placa;
+        this.tipodenuncia = tipodenuncia;
+        this.descripcion = descripcion;
+        this.latitud = latitud;
+        this.longitud = longitud;
+    }
 
     public String getPlaca() {
         return placa;
@@ -51,8 +58,8 @@ public class Denuncia implements Serializable {
         return latitud;
     }
 
-    public float getLongiud() {
-        return longiud;
+    public float getLongitud() {
+        return longitud;
     }
 
     public String getFechahora() {
@@ -79,8 +86,8 @@ public class Denuncia implements Serializable {
         this.latitud = latitud;
     }
 
-    public void setLongiud(float longiud) {
-        this.longiud = longiud;
+    public void setLongitud(float longitud) {
+        this.longitud = longitud;
     }
 
     public void setFechahora(String fechahora) {

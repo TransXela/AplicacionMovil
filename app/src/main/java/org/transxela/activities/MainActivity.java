@@ -1,7 +1,10 @@
 package org.transxela.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -9,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +30,8 @@ import org.transxela.fragments.FragmentTrafico;
  */
 public class MainActivity extends AppCompatActivity implements Button.OnClickListener {
 
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor preferenceseditor;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager tabViewPager;
@@ -45,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         setupTabIcons();
         buttonNewDenuncia = (FloatingActionButton) findViewById(R.id.buttonNewDenuncia);
         buttonNewDenuncia.setOnClickListener(this);
+        preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        preferenceseditor=preferences.edit();
+        saveImei();
     }
 
     @Override
@@ -75,4 +84,14 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         viewPager.setAdapter(tabAdapter);
     }
 
+    private  String obtenerImei(){
+        TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        return mngr.getDeviceId().toString();
+
+    }
+
+    private void saveImei(){
+        preferenceseditor.putString("imei",obtenerImei());
+        preferenceseditor.apply();
+    }
 }
