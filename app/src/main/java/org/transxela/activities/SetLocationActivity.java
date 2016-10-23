@@ -36,18 +36,28 @@ public class SetLocationActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
+        float zoom=12.0f;
+
         //LatLngBounds bounds = new LatLngBounds(new LatLng(-15.0, 165.0), new LatLng(15.0, -165.0));
         LatLngBounds XELA = new LatLngBounds(new LatLng(14.86, -91.56), new LatLng(14.88, -91.46));
-        CameraPosition XELA_CAMERA = new CameraPosition.Builder().target(new LatLng(14.844875, -91.523197)).zoom(18.0f).bearing(0).tilt(0).build();
-        //googleMap.setMinZoomPreference(13.5f);
-        //googleMap.setMaxZoomPreference(20.0f);
+
+        CameraPosition XELA_CAMERA = new CameraPosition.Builder().target(new LatLng(14.844875, -91.523197)).zoom(zoom).bearing(0).tilt(0).build();
+        googleMap.setMinZoomPreference(zoom);
+        googleMap.setMaxZoomPreference(20.0f);
         googleMap.setLatLngBoundsForCameraTarget(XELA);
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(XELA_CAMERA));
+        googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+            float zoomito= cameraPosition.zoom;
+            }
+        });
 
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
                 googleMap.addMarker(new MarkerOptions().position(latLng));
+
             }
         });
     }
