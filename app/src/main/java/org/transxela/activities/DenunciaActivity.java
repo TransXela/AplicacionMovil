@@ -140,11 +140,16 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
     }
 
     private void createDenuncia() throws JSONException {
-        String placa = SPINNERLIST.get(placaType.getSelectedIndex()) + placaNumber.getText();
-        int tipo = (denunciaType.getSelectedIndex())+1;
-        String descripcion = denunciaDescription.getText().toString();
-        Denuncia denuncia = new Denuncia(placa, tipo, descripcion, latitud, longitud);
-        makeRequest(denuncia);
+        if (placaNumber.getText().toString().equals("") || denunciaDescription.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(),
+                    "Campos ingresados incorrectamente", Toast.LENGTH_SHORT).show();
+        } else {
+            String placa = SPINNERLIST.get(placaType.getSelectedIndex()) + placaNumber.getText();
+            int tipo = denunciaType.getSelectedIndex();
+            String descripcion = denunciaDescription.getText().toString();
+            Denuncia denuncia = new Denuncia(placa, tipo, descripcion, latitud, longitud);
+            makeRequest(denuncia);
+        }
     }
 
     private void makeRequest(final Denuncia denuncia) throws JSONException {
