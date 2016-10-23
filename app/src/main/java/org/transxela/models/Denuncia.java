@@ -1,5 +1,9 @@
 package org.transxela.models;
 
+import com.google.gson.GsonBuilder;
+
+import org.transxela.models.deserializer.DenunciaDeserializer;
+
 import java.io.Serializable;
 
 /**
@@ -96,5 +100,10 @@ public class Denuncia implements Serializable {
 
     public void setEstado(int estado) {
         this.estado = estado;
+    }
+
+    public static Denuncia getDenunciaFromWrapperJSON(String JSON){
+        return new GsonBuilder().registerTypeAdapter(Denuncia.class, new DenunciaDeserializer())
+                .create().fromJson(JSON, Denuncia.class);
     }
 }

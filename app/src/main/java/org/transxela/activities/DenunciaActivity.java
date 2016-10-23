@@ -1,5 +1,6 @@
 package org.transxela.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +29,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonObject;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import org.json.JSONException;
@@ -57,6 +59,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
     private MaterialSpinner placaType;
     private FButton getLocationButton, setLocationButton;
     private SharedPreferences preferences;
+    private SharedPreferences.Editor preferencesEditor;
     private Denuncia denuncia;
 
     private AppCompatEditText placaNumber;
@@ -80,6 +83,8 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
                 onBackPressed();
             }
         });
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        preferencesEditor = preferences.edit();
         placaType = (MaterialSpinner) findViewById(R.id.placaType);
         placaType.setItems(SPINNERLIST);
         placaType.setSelectedIndex(0);
@@ -93,7 +98,6 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         setLocationButton.setButtonColor(getResources().getColor(R.color.colorPrimary));
         setLocationButton.setShadowColor(getResources().getColor(R.color.baseBackgroud));
         setLocationButton.setOnClickListener(this);
-        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         placaNumber = (AppCompatEditText) findViewById(R.id.placaNumber);
         denunciaDescription = (EditText) findViewById(R.id.denunciaDescription);
@@ -146,11 +150,18 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
             Denuncia denuncia = new Denuncia(placa, tipo, descripcion, latitud, longitud);
             makeRequest(denuncia);
         }
-
     }
 
-    private void makeRequest(Denuncia denuncia) throws JSONException {
+    private void makeRequest(final Denuncia denuncia) throws JSONException {
         String body = new DenunciaWrapper(denuncia, preferences.getString("imei", "000000")).ToJson();
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setIndeterminate(false);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setTitle("Denunciando");
+        dialog.setMessage("Espere un momento");
+        dialog.show();
         AndroidNetworking.post(Endpoints.POSTDENUNCIA)
                 .addHeaders("Content-Type", "application/json")
                 .addJSONObjectBody(new JSONObject(body))
@@ -160,12 +171,35 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
-                        Log.d("respuesta", response.toString());
+                        try {
+                            JSONObject denunciaObject = response.getJSONObject("denuncia");
+                            if(denunciaObject.has("token")){
+                                String token = denunciaObject.get("token").toString();
+                                preferencesEditor.putString("token", token);
+                                preferencesEditor.apply();
+                                finish();
+                                Toast.makeText(getApplicationContext(), "Denuncia realizada con exito", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("response", response.toString());
+                        if(dialog.isShowing())
+                            dialog.dismiss();
                     }
 
                     @Override
                     public void onError(ANError error) {
                         // handle error
+                        Log.d("ERROR", error.getErrorBody());
+                        if(dialog.isShowing())
+                            dialog.dismiss();
+                        if(error.getErrorBody().contains("no tiene permitido hacer mas denuncias")){
+                            finish();
+                            Toast.makeText(getApplicationContext(), "No puede hacaer mas denuncias, intente mas tarde", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                            Toast.makeText(getApplicationContext(), "Ha ocurrido un error, intente nuevamente", Toast.LENGTH_LONG).show();
                     }
                 });
     }
