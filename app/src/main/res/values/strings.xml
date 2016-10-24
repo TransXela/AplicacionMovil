@@ -3,4 +3,5 @@
     <string name="fa_icon_reported">&#xf05d;</string>
     <string name="fa_icon_inprocess">&#xf12a;</string>
     <string name="fa_icon_denied">&#xf00d;</string>
+    <string name="fa_icon_arrow">&#xf061;</string>
 </resources>
