@@ -1,5 +1,6 @@
 package org.transxela.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -61,6 +62,13 @@ public class SetLocationActivity extends AppCompatActivity implements OnMapReady
                 googleMap.clear();
                 googleMap.addMarker(new MarkerOptions().position(latLng));
                 coordenadas=latLng;
+                //Log.d("latitud",""+coordenadas.latitude);
+                //Log.d("longitud",""+coordenadas.longitude);
+                Intent intent= new Intent();
+                intent.putExtra("Latitud",coordenadas.latitude);
+                intent.putExtra("Longitud",coordenadas.longitude);
+                setResult(RESULT_OK, intent);
+                finish();
 
             }
         });

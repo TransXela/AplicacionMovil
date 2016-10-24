@@ -1,14 +1,24 @@
 package org.transxela.activities;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
@@ -29,6 +39,9 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.JsonObject;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
@@ -48,7 +61,7 @@ import info.hoang8f.widget.FButton;
 /**
  * Created by pblinux on 14/09/16.
  */
-public class DenunciaActivity extends AppCompatActivity implements Button.OnClickListener {
+public class DenunciaActivity extends AppCompatActivity implements Button.OnClickListener,GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private static List<String> SPINNERLIST = Arrays.asList("C", "P", "A");
     private static List<String> DENUNCIASLIST = Arrays.asList("Cobro Ilegal", "Unidad en mal estado", "Malos tratos", "Conduccion Temeraria", "Unidad en sobrecargada");
@@ -65,7 +78,14 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
     private AppCompatEditText placaNumber;
     private EditText denunciaDescription;
     private MaterialSpinner denunciaType;
-    private float longitud = -118.453987f, latitud = 81.0003425f;
+    private float longitud =0.0f, latitud=0.0f ;
+
+    private static final String LOGTAG = "android-localizacion";
+
+    private static final int PETICION_PERMISO_LOCALIZACION = 101;
+   // private float longitud,latitud;
+
+    private GoogleApiClient apiClient;
 
 
     @Override
@@ -104,6 +124,13 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         denunciaType = (MaterialSpinner) findViewById(R.id.denunciaType);
         denunciaType.setItems(DENUNCIASLIST);
         denunciaType.setSelectedIndex(0);
+
+        apiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .build();
+
     }
 
     @Override
@@ -131,24 +158,41 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.getLocationButton:
+                obtenerUbicacion();
                 return;
             case R.id.setLocationButton:
-                //startActivityForResult(new Intent(getApplicationContext(), SetLocationActivity.class), LOCATION);
-                startActivity(new Intent(getApplicationContext(), SetLocationActivity.class));
+                startActivityForResult(new Intent(getApplicationContext(), SetLocationActivity.class), LOCATION);
+                //startActivity(new Intent(getApplicationContext(), SetLocationActivity.class));
                 return;
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK){
+            longitud=(float)data.getDoubleExtra("Longitud",0.0);
+            latitud=(float)data.getDoubleExtra("Latitud",0.0);
+            Log.d("sirve",""+longitud);
+        }
+
+    }
+
     private void createDenuncia() throws JSONException {
+        if(latitud==0.0f||longitud==0.0f){
+            Toast.makeText(getApplicationContext(),
+                    "Porfavor obtenga o seleccione su ubicacion", Toast.LENGTH_SHORT).show();
+        }else{
         if (placaNumber.getText().toString().equals("") || denunciaDescription.getText().toString().equals("")) {
             Toast.makeText(getApplicationContext(),
                     "Campos ingresados incorrectamente", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else {
             String placa = SPINNERLIST.get(placaType.getSelectedIndex()) + placaNumber.getText();
-            int tipo = denunciaType.getSelectedIndex();
+            int tipo = (denunciaType.getSelectedIndex())+1;
             String descripcion = denunciaDescription.getText().toString();
             Denuncia denuncia = new Denuncia(placa, tipo, descripcion, latitud, longitud);
             makeRequest(denuncia);
+        }
         }
     }
 
@@ -203,4 +247,77 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
                     }
                 });
     }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+            //pasar a otro metodo
+
+    }
+    private void updateUI(Location loc) {
+        if (loc != null) {
+            latitud=(float)loc.getLatitude();
+            longitud=(float)loc.getLongitude();
+            Log.d("yiah","si sirve");
+
+        } else {
+            Log.d("ña","no sirver");
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.e(LOGTAG, "Se ha interrumpido la conexión con Google Play Services");
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+        Log.e(LOGTAG, "Error grave al conectar con Google Play Services");
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == PETICION_PERMISO_LOCALIZACION) {
+            if (grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                //Permiso concedido
+
+                @SuppressWarnings("MissingPermission")
+                Location lastLocation =
+                        LocationServices.FusedLocationApi.getLastLocation(apiClient);
+
+                updateUI(lastLocation);
+
+            } else {
+                //Permiso denegado:
+                //Deberíamos deshabilitar toda la funcionalidad relativa a la localización.
+
+                Log.e(LOGTAG, "Permiso denegado");
+            }
+        }
+    }
+
+    private void obtenerUbicacion (){
+
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PETICION_PERMISO_LOCALIZACION);
+        } else {
+
+            Location lastLocation =
+                    LocationServices.FusedLocationApi.getLastLocation(apiClient);
+
+            updateUI(lastLocation);
+        }
+    }
+
+
+
+
 }
