@@ -145,7 +145,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
                     "Campos ingresados incorrectamente", Toast.LENGTH_SHORT).show();
         } else {
             String placa = SPINNERLIST.get(placaType.getSelectedIndex()) + placaNumber.getText();
-            int tipo = denunciaType.getSelectedIndex();
+            int tipo = (denunciaType.getSelectedIndex())+1;
             String descripcion = denunciaDescription.getText().toString();
             Denuncia denuncia = new Denuncia(placa, tipo, descripcion, latitud, longitud);
             makeRequest(denuncia);
@@ -191,7 +191,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
                     @Override
                     public void onError(ANError error) {
                         // handle error
-                        Log.d("ERROR", error.getErrorBody());
+                        Log.d("ERROR", error.getErrorBody().toString());
                         if(dialog.isShowing())
                             dialog.dismiss();
                         if(error.getErrorBody().contains("no tiene permitido hacer mas denuncias")){

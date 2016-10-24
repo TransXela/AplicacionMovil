@@ -23,6 +23,16 @@ public class DenunciaAdapter extends RecyclerView.Adapter<DenunciaAdapter.Denunc
     private Context context;
     private ArrayList<Denuncia> denuncias;
 
+    public static OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public DenunciaAdapter(Context context, ArrayList<Denuncia> denuncias) {
         this.context = context;
         this.denuncias = denuncias;
@@ -44,7 +54,7 @@ public class DenunciaAdapter extends RecyclerView.Adapter<DenunciaAdapter.Denunc
 
     @Override
     public int getItemCount() {
-        return 0;
+        return denuncias.size();
     }
 
     private int getStatusColor(int numberStatus){
@@ -74,12 +84,20 @@ public class DenunciaAdapter extends RecyclerView.Adapter<DenunciaAdapter.Denunc
         protected TextView denunciaStatus;
         protected TextView denunciaDate;
 
-        public DenunciaViewHolder(View itemView) {
+        public DenunciaViewHolder(final View itemView) {
             super(itemView);
             denunciaDate = (TextView) itemView.findViewById(R.id.denunciaDate);
             denunciaStatus = (TextView) itemView.findViewById(R.id.denunciaStatus);
             Typeface iconFont = FontManager.getTypeface(context, FontManager.FONTAWESOME);
             FontManager.markAsIconContainer(itemView.findViewById(R.id.denunciaStatus), iconFont);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!=null){
+                        listener.onItemClick(itemView, getLayoutPosition());
+                    }
+                }
+            });
         }
     }
 }

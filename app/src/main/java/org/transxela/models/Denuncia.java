@@ -102,7 +102,7 @@ public class Denuncia implements Serializable {
         this.estado = estado;
     }
 
-    public static Denuncia getDenunciaFromWrapperJSON(String JSON){
+    public static Denuncia getDenunciaFromJSON(String JSON){
         return new GsonBuilder().registerTypeAdapter(Denuncia.class, new DenunciaDeserializer())
                 .create().fromJson(JSON, Denuncia.class);
     }

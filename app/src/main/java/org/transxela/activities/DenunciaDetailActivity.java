@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,6 +15,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.transxela.R;
+import org.transxela.api.Constants;
+import org.transxela.models.Denuncia;
 import org.transxela.utils.FontManager;
 
 /**
@@ -23,21 +26,39 @@ import org.transxela.utils.FontManager;
 public class DenunciaDetailActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     protected MapView mMapView;
+    protected Denuncia denuncia;
+
+    protected TextView denunciaDate, denunciaType, denunciaStatus, denunciaStatusLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_denuncia_detail);
-        Typeface iconFont = FontManager.getTypeface(getApplicationContext(), FontManager.FONTAWESOME);
-        FontManager.markAsIconContainer(findViewById(R.id.denunciaStatus), iconFont);
+        denuncia = (Denuncia) getIntent().getSerializableExtra("denuncia_item");
+        denunciaDate = (TextView) findViewById(R.id.denunciaDate);
+        denunciaType = (TextView) findViewById(R.id.denunciaType);
+        denunciaStatus = (TextView) findViewById(R.id.denunciaStatus);
+        denunciaStatusLabel = (TextView) findViewById(R.id.denunciaStatusLabel);
         mMapView = (MapView) findViewById(R.id.mapview);
+
+        Typeface iconFont = FontManager.getTypeface(getApplicationContext(), FontManager.FONTAWESOME);
+        FontManager.markAsIconContainer(denunciaStatus, iconFont);
+
+        denunciaDate.setText(denuncia.getFechahora());
+        denunciaType.setText(Constants.getTipoDenuncia(denuncia.getTipodenuncia()));
+        denunciaStatus.setText(getEstadoSymbolDenuncia(denuncia.getEstado()));
+        denunciaStatus.setTextColor(getEstadoColorDenuncia(denuncia.getEstado()));
+        denunciaStatusLabel.setText(Constants.getEstadoDenuncia(denuncia.getEstado()));
+        denunciaStatusLabel.setTextColor(getEstadoColorDenuncia(denuncia.getEstado()));
+
         mMapView.onCreate(savedInstanceState);
         mMapView.getMapAsync(this);
+
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng coordinate = new LatLng(14.833617, -91.518496);
+        LatLng coordinate = new LatLng(denuncia.getLatitud(), denuncia.getLongitud());
         MarkerOptions position = new MarkerOptions().position(coordinate);
         googleMap.addMarker(position);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinate, 17.0f));
@@ -86,5 +107,27 @@ public class DenunciaDetailActivity extends AppCompatActivity implements OnMapRe
         if (mMapView != null) {
             mMapView.onSaveInstanceState(outState);
         }
+    }
+
+    public String getEstadoSymbolDenuncia(int i){
+        String symbol = "";
+        if(i == 1)
+            symbol = getResources().getString(R.string.fa_icon_inprocess);
+        if(i == 3)
+            symbol = getResources().getString(R.string.fa_icon_reported);
+        if(i == 2)
+            symbol = getResources().getString(R.string.fa_icon_denied);
+        return symbol;
+    }
+
+    public int getEstadoColorDenuncia(int i){
+        int symbol = 0;
+        if(i == 1)
+            symbol = getResources().getColor(R.color.denunciaInProccess);
+        if(i == 3)
+            symbol = getResources().getColor(R.color.denunciaReported);
+        if(i == 2)
+            symbol = getResources().getColor(R.color.denunciaDenied);
+        return symbol;
     }
 }
