@@ -159,8 +159,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         switch (v.getId()) {
             case R.id.getLocationButton:
                 obtenerUbicacion();
-                Toast.makeText(getApplicationContext(),
-                        "Ubicacion obtenida", Toast.LENGTH_SHORT).show();
+
                 return;
             case R.id.setLocationButton:
                 startActivityForResult(new Intent(getApplicationContext(), SetLocationActivity.class), LOCATION);
@@ -264,9 +263,13 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
             latitud=(float)loc.getLatitude();
             longitud=(float)loc.getLongitude();
             Log.d("yiah","si sirve");
+            Toast.makeText(getApplicationContext(),
+                    "Ubicacion obtenida", Toast.LENGTH_SHORT).show();
 
         } else {
             Log.d("ña","no sirver");
+            Toast.makeText(getApplicationContext(),
+                    "Por favor Active su Gps", Toast.LENGTH_SHORT).show();
         }
     }
 
