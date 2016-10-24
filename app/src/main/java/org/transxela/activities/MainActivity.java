@@ -96,17 +96,17 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         tabTwo.setText("Mis Denuncias");
         tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.ic_report_problem_white_24dp, 0, 0);
         tabLayout.getTabAt(1).setCustomView(tabTwo);
-        TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_header, null);
+        /*TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_header, null);
         tabThree.setText("Trafico");
         tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.ic_traffic_white_24dp, 0, 0);
-        tabLayout.getTabAt(2).setCustomView(tabThree);
+        tabLayout.getTabAt(2).setCustomView(tabThree);*/
     }
 
     private void setupViewPager(ViewPager viewPager) {
         TabViewAdapter tabAdapter = new TabViewAdapter(getSupportFragmentManager());
         tabAdapter.addFragment(new FragmentHome(), "Inicio");
         tabAdapter.addFragment(new FragmentDenuncia(), "Mis Denuncias");
-        tabAdapter.addFragment(new FragmentTrafico(), "Trafico");
+        //tabAdapter.addFragment(new FragmentTrafico(), "Trafico");
         viewPager.setAdapter(tabAdapter);
     }
 
