@@ -3,7 +3,9 @@ package org.transxela.activities;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -25,6 +27,8 @@ import org.transxela.utils.FontManager;
 
 public class DenunciaDetailActivity extends AppCompatActivity implements OnMapReadyCallback{
 
+    private Toolbar toolbar;
+
     protected MapView mMapView;
     protected Denuncia denuncia;
 
@@ -35,6 +39,16 @@ public class DenunciaDetailActivity extends AppCompatActivity implements OnMapRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_denuncia_detail);
         denuncia = (Denuncia) getIntent().getSerializableExtra("denuncia_item");
+        toolbar = (Toolbar) findViewById(R.id.denunciaToolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Mi denuncia");
+        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         denunciaDate = (TextView) findViewById(R.id.denunciaDate);
         denunciaType = (TextView) findViewById(R.id.denunciaType);
         denunciaStatus = (TextView) findViewById(R.id.denunciaStatus);

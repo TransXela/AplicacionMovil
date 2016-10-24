@@ -96,7 +96,6 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Nueva Denuncia");
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
-        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
