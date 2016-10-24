@@ -1,5 +1,6 @@
 package org.transxela.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,7 @@ import org.transxela.R;
 public class SetLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     protected MapView mMapView;
-
+    private LatLng coordenadas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,13 +37,13 @@ public class SetLocationActivity extends AppCompatActivity implements OnMapReady
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
-        float zoom=12.0f;
+        float zoom=14.0f;
 
         //LatLngBounds bounds = new LatLngBounds(new LatLng(-15.0, 165.0), new LatLng(15.0, -165.0));
         //LatLngBounds XELA = new LatLngBounds(new LatLng(14.86, -91.56), new LatLng(14.88, -91.46));
 
         CameraPosition XELA_CAMERA = new CameraPosition.Builder().target(new LatLng(14.844875, -91.523197)).zoom(zoom).bearing(0).tilt(0).build();
-        googleMap.setMinZoomPreference(zoom);
+        googleMap.setMinZoomPreference(12);
         googleMap.setMaxZoomPreference(16.0f);
        // googleMap.setLatLngBoundsForCameraTarget(XELA);
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(XELA_CAMERA));
@@ -58,7 +59,16 @@ public class SetLocationActivity extends AppCompatActivity implements OnMapReady
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                googleMap.clear();
                 googleMap.addMarker(new MarkerOptions().position(latLng));
+                coordenadas=latLng;
+                //Log.d("latitud",""+coordenadas.latitude);
+                //Log.d("longitud",""+coordenadas.longitude);
+                Intent intent= new Intent();
+                intent.putExtra("Latitud",coordenadas.latitude);
+                intent.putExtra("Longitud",coordenadas.longitude);
+                setResult(RESULT_OK, intent);
+                finish();
 
             }
         });
@@ -106,5 +116,9 @@ public class SetLocationActivity extends AppCompatActivity implements OnMapReady
         if (mMapView != null) {
             mMapView.onSaveInstanceState(outState);
         }
+    }
+
+    public LatLng getCoordenadas() {
+        return coordenadas;
     }
 }
