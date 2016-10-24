@@ -164,8 +164,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
                 return;
             case R.id.setLocationButton:
                 startActivityForResult(new Intent(getApplicationContext(), SetLocationActivity.class), LOCATION);
-                Toast.makeText(getApplicationContext(),
-                        "Ubicacion obtenida", Toast.LENGTH_SHORT).show();
+
                 //startActivity(new Intent(getApplicationContext(), SetLocationActivity.class));
                 return;
         }
@@ -177,6 +176,8 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
             longitud=(float)data.getDoubleExtra("Longitud",0.0);
             latitud=(float)data.getDoubleExtra("Latitud",0.0);
             Log.d("sirve",""+longitud);
+            Toast.makeText(getApplicationContext(),
+                    "Ubicacion obtenida", Toast.LENGTH_SHORT).show();
         }
 
     }
