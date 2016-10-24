@@ -159,9 +159,13 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         switch (v.getId()) {
             case R.id.getLocationButton:
                 obtenerUbicacion();
+                Toast.makeText(getApplicationContext(),
+                        "Ubicacion obtenida", Toast.LENGTH_SHORT).show();
                 return;
             case R.id.setLocationButton:
                 startActivityForResult(new Intent(getApplicationContext(), SetLocationActivity.class), LOCATION);
+                Toast.makeText(getApplicationContext(),
+                        "Ubicacion obtenida", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(getApplicationContext(), SetLocationActivity.class));
                 return;
         }
