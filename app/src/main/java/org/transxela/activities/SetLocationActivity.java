@@ -33,7 +33,7 @@ public class SetLocationActivity extends AppCompatActivity implements OnMapReady
     private LatLng coordenadas;
     private View bottomSheet;
     private BottomSheetBehavior bottomSheetBehavior;
-    private Button setLocation;
+    private Button setLocation, cancelLocation;
     private GoogleMap map;
 
     @Override
@@ -42,7 +42,9 @@ public class SetLocationActivity extends AppCompatActivity implements OnMapReady
         setContentView(R.layout.activity_setlocation);
         bottomSheet = findViewById(R.id.bottom_sheet);
         setLocation = (Button) bottomSheet.findViewById(R.id.bottomAccept);
+        cancelLocation = (Button) bottomSheet.findViewById(R.id.bottomNo);
         setLocation.setOnClickListener(this);
+        cancelLocation.setOnClickListener(this);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         mMapView = (MapView) findViewById(R.id.mapview);
         mMapView.onCreate(savedInstanceState);
@@ -150,6 +152,14 @@ public class SetLocationActivity extends AppCompatActivity implements OnMapReady
                 setResult(RESULT_OK, intent);
                 finish();
                 return;
+            case R.id.bottomNo:
+                map.clear();
+                bottomSheet.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    }
+                });
         }
     }
 

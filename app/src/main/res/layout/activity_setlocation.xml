@@ -46,6 +46,12 @@
                     android:layout_height="wrap_content"
                     android:text="Si" />
 
+                <Button
+                    android:id="@+id/bottomNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No" />
+
             </LinearLayout>
 
         </LinearLayout>
