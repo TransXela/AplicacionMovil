@@ -78,7 +78,7 @@ public class FragmentDenuncia extends Fragment implements JSONArrayRequestListen
         Log.d("response", response.toString());
         try{
             denuncias.clear();
-            for (int i=0; i<response.length(); i++){
+            for (int i=response.length()-1; i>=0; i--){
                 denuncias.add(Denuncia.getDenunciaFromJSON(response.get(i).toString()));
             }
             if(denunciaSwipe.isRefreshing()){
