@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="215dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapview"
+            android:layout_width="match_parent"
+            android:layout_height="125dp"
+            android:layout_weight="0"/>
+
+        <TextView
+            android:id="@+id/actividadTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mapview"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Nombre de la actividad"
+            android:fontFamily="sans-serif-medium"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/actividadTitle"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/labelFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha: "/>
+
+            <TextView
+                android:id="@+id/fecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/labelFecha"
+                android:text="22 de septiembre de 2016"
+                android:fontFamily="sans-serif-light"/>
+
+            <TextView
+                android:id="@+id/labelHora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelFecha"
+                android:text="Hora: "/>
+
+            <TextView
+                android:id="@+id/hora"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelFecha"
+                android:layout_toRightOf="@id/labelHora"
+                android:text="16:00"
+                android:fontFamily="sans-serif-light"/>
+            <TextView
+                android:id="@+id/labelUbicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelHora"
+                android:text="Ubicacion: "/>
+            <TextView
+                android:id="@+id/ubicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelHora"
+                android:layout_toRightOf="@id/labelUbicacion"
+                android:text="22 avenida 3-25 zona 3"
+                android:fontFamily="sans-serif-light"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
