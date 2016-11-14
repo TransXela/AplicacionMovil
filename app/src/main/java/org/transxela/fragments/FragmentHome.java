@@ -1,9 +1,12 @@
 package org.transxela.fragments;
 
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,13 +37,15 @@ import java.util.ArrayList;
 /**
  * Created by pblinux on 13/09/16.
  */
-public class FragmentHome extends Fragment implements JSONObjectRequestListener{
+public class FragmentHome extends Fragment implements JSONObjectRequestListener, SwipeRefreshLayout.OnRefreshListener{
 
     private ArrayList<Actividad> actividades;
     private Consejo consejo;
     private TextView consejoDia;
     private RecyclerView actividadList;
+    private SwipeRefreshLayout actividadSwipe;
     private ActividadAdapter actividadAdapter;
+    private SharedPreferences preferences;
 
     public FragmentHome() {
         // Required empty public constructor
@@ -61,15 +66,31 @@ public class FragmentHome extends Fragment implements JSONObjectRequestListener{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         actividades = new ArrayList<>();
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         consejoDia = (TextView) view.findViewById(R.id.consejoContainer).findViewById(R.id.consejoDia);
         actividadList = (RecyclerView) view.findViewById(R.id.actividadList);
-        loadDashboard();
+        actividadSwipe = (SwipeRefreshLayout) view.findViewById(R.id.actividadSwipe);
+        actividadSwipe.setOnRefreshListener(this);
+        actividadSwipe.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent);
+        if(preferences.getString("token", "") == ""){
+
+        } else {
+            actividadSwipe.post(new Runnable() {
+                @Override
+                public void run() {
+                    actividadSwipe.setRefreshing(true);
+                    loadDashboard();
+                }
+            });
+        }
+
     }
 
     @Override
     public void onResponse(JSONObject response) {
         Log.d("reponse", response.toString());
         try {
+            actividades.clear();
             JSONObject baseObject = response;
             JSONArray actividadObject = baseObject.getJSONArray("actividades");
             JSONArray consejoObject = baseObject.getJSONArray("consejo");
@@ -77,6 +98,9 @@ public class FragmentHome extends Fragment implements JSONObjectRequestListener{
             for(int i=0; i < actividadObject.length(); i++){
                 Actividad newActividad = Actividad.getActividadFromJSON(actividadObject.get(i).toString());
                 actividades.add(newActividad);
+            }
+            if(actividadSwipe.isRefreshing()){
+                actividadSwipe.setRefreshing(false);
             }
             setContentFromModel();
         } catch (JSONException e) {
@@ -86,7 +110,16 @@ public class FragmentHome extends Fragment implements JSONObjectRequestListener{
 
     @Override
     public void onError(ANError anError) {
+        if(actividadSwipe.isRefreshing()){
+            actividadSwipe.setRefreshing(false);
+        }
         Log.d("Error", anError.getErrorBody().toString());
+    }
+
+
+    @Override
+    public void onRefresh() {
+        loadDashboard();
     }
 
     private void loadDashboard(){

@@ -69,7 +69,13 @@ public class FragmentDenuncia extends Fragment implements JSONArrayRequestListen
         if(preferences.getString("token", "") == ""){
 
         } else {
-            getAllDenuncias();
+            denunciaSwipe.post(new Runnable() {
+                @Override
+                public void run() {
+                    denunciaSwipe.setRefreshing(true);
+                    getAllDenuncias();
+                }
+            });
         }
     }
 

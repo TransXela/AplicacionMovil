@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
         android:id="@+id/consejoContainer"
@@ -28,36 +27,47 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Consejo del dia:"
-                android:textSize="30sp"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+
             <TextView
                 android:id="@+id/consejoDia"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
+                android:fontFamily="sans-serif-thin"
                 android:gravity="center"
                 android:text=""
-                android:fontFamily="sans-serif-thin"
-                android:textColor="#ffffff"/>
+                android:textColor="#ffffff" />
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
     <TextView
+        android:id="@+id/labelActividades"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/consejoContainer"
+        android:fontFamily="sans-serif-light"
         android:text="Actividades del dia"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-light"/>
+        android:textStyle="bold" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/actividadList"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/actividadSwipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp" />
+        android:layout_below="@id/labelActividades">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/actividadList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp" />
 
 
-</LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout>
