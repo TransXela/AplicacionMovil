@@ -39,7 +39,7 @@ public class Constants {
         if(i == INPROCESS)
             estado = "En proceso";
         if(i == DENIED)
-            estado = "No realizada";
+            estado = "Pendiente de verificacion";
         if(i == REPORTED)
             estado = "Reportada";
         return estado;
