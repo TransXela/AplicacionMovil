@@ -32,6 +32,7 @@
                 android:layout_height="match_parent"
                 android:padding="16dp"
                 android:text="¿Esta seguro que esta es la ubicacion?"
+                android:textColor="#ffffff"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -44,13 +45,20 @@
                     android:id="@+id/bottomAccept"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Si" />
+                    android:text="Si"
+                    android:textColor="#ffffff"
+                    android:background="@color/colorAccent"
+                    style="@style/Widget.AppCompat.Button.Borderless"/>
 
                 <Button
                     android:id="@+id/bottomNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:layout_marginLeft="10dp"
+                    android:text="No"
+                    android:textColor="#ffffff"
+                    android:background="@color/colorAccent"
+                    style="@style/Widget.AppCompat.Button.Borderless"/>
 
             </LinearLayout>
 
