@@ -15,10 +15,12 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/denunciaToolbar">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/denunciaToolbar">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -108,7 +110,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="30sp" />
 
-            <android.support.v7.widget.AppCompatEditText
+            <EditText
                 android:id="@+id/denunciaDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -176,6 +178,6 @@
 
         </RelativeLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 
 </RelativeLayout>
