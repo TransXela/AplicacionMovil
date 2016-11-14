@@ -2,6 +2,7 @@ package org.transxela.models;
 
 import com.google.gson.GsonBuilder;
 
+import org.transxela.models.deserializer.ConsejoDeserializer;
 import org.transxela.models.deserializer.DenunciaDeserializer;
 
 import java.io.Serializable;
