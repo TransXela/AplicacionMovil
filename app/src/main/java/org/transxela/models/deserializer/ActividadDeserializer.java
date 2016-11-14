@@ -21,12 +21,26 @@ public class ActividadDeserializer implements JsonDeserializer<Actividad> {
         JsonObject baseObject = json.getAsJsonObject();
         String nombre = baseObject.get("nombre").getAsString();
         String descripcion = baseObject.get("descripcion").getAsString();
-        String fecha = baseObject.get("fecha").getAsString();
+        String fecha = "";
+        if(baseObject.get("fecha").isJsonNull()){
+            fecha = "Falta la maldita fecha!!!";
+        } else {
+            fecha = baseObject.get("fecha").getAsString();
+        }
         String lugar = baseObject.get("lugar").getAsString();
         String direccion = baseObject.get("direccion").getAsString();
-        float latitud = baseObject.get("latitud").getAsFloat();
-        float longitud = baseObject.get("longitud").getAsFloat();
-
+        float latitud = 0.0f;
+        if(baseObject.get("latitud").isJsonNull()){
+            latitud = 34.084f;
+        } else {
+            latitud = baseObject.get("latitud").getAsFloat();
+        }
+        float longitud = 0.0f;
+        if(baseObject.get("longitud").isJsonNull()){
+            longitud = -119.84f;
+        } else {
+            longitud = baseObject.get("longitud").getAsFloat();
+        }
         return new Actividad(nombre,descripcion,fecha,lugar,direccion,latitud,longitud);
     }
 }

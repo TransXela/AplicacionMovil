@@ -5,9 +5,10 @@
     app:cardElevation="2dp"
     android:layout_width="match_parent"
     android:layout_height="215dp"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginTop="5dp">
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,8 +18,7 @@
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapview"
             android:layout_width="match_parent"
-            android:layout_height="125dp"
-            android:layout_weight="0"/>
+            android:layout_height="125dp" />
 
         <TextView
             android:id="@+id/actividadTitle"
