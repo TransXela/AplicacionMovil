@@ -39,10 +39,17 @@ public class ActividadAdapter extends RecyclerView.Adapter<ActividadAdapter.Acti
     @Override
     public void onBindViewHolder(ActividadViewHolder holder, int position) {
         Actividad actividad = actividades.get(position);
+        String fecha,hora,fechahora;
+        fechahora=actividad.getFecha();
+        String[] output =fechahora.split("T");
+        fecha=output[0];
+        hora=(output[1]);
+        String[] output2 =hora.split("Z");
+        hora=output2[0];
         holder.mapViewListItemViewOnResume();
         holder.mMapViewListItemView.setTitle(actividad.getNombre());
-        holder.mMapViewListItemView.setFecha(actividad.getFecha());
-        holder.mMapViewListItemView.setHora(actividad.getFecha());
+        holder.mMapViewListItemView.setFecha(fecha);
+        holder.mMapViewListItemView.setHora(hora);
         holder.mMapViewListItemView.setUbicacion(actividad.getDireccion());
         holder.mMapViewListItemView.setLocation(actividad.getLatitud(), actividad.getLongitud());
     }
