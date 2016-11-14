@@ -89,13 +89,13 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
 
     private void setupTabIcons() {
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_header, null);
-        tabOne.setText("Inicio");
-        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.ic_home_white_24dp, 0, 0);
-        tabLayout.getTabAt(0).setCustomView(tabOne);
+        tabOne.setText("Cultura");
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.ic_location_on_white_24dp, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(tabOne);
         TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_header, null);
         tabTwo.setText("Mis Denuncias");
         tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.ic_report_problem_white_24dp, 0, 0);
-        tabLayout.getTabAt(1).setCustomView(tabTwo);
+        tabLayout.getTabAt(0).setCustomView(tabTwo);
         /*TextView tabThree = (TextView) LayoutInflater.from(this).inflate(R.layout.tab_header, null);
         tabThree.setText("Trafico");
         tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.mipmap.ic_traffic_white_24dp, 0, 0);
@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
 
     private void setupViewPager(ViewPager viewPager) {
         TabViewAdapter tabAdapter = new TabViewAdapter(getSupportFragmentManager());
-        tabAdapter.addFragment(new FragmentHome(), "Inicio");
         tabAdapter.addFragment(new FragmentDenuncia(), "Mis Denuncias");
+        tabAdapter.addFragment(new FragmentHome(), "Inicio");
         //tabAdapter.addFragment(new FragmentTrafico(), "Trafico");
         viewPager.setAdapter(tabAdapter);
     }
