@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -62,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         preferenceseditor = preferences.edit();
         saveImei();
-    }
+        obtenerImei();
+}
 
     @Override
     public void onClick(View v) {
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
             TelephonyManager mngr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             imei = mngr.getDeviceId().toString();
             saveImei();
+            Log.d("imei:",imei);
         }
     }
 
