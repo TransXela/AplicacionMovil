@@ -66,7 +66,7 @@ import info.hoang8f.widget.FButton;
 public class DenunciaActivity extends AppCompatActivity implements Button.OnClickListener,GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private static List<String> SPINNERLIST = Arrays.asList("C", "P", "A");
-    private static List<String> DENUNCIASLIST = Arrays.asList("Cobro Ilegal", "Unidad en mal estado", "Malos tratos", "Conduccion Temeraria", "Unidad en sobrecargada");
+    private static List<String> DENUNCIASLIST = Arrays.asList("Cobro Ilegal", "Unidad en mal estado", "Unidad Sobrecargada", "Abuso Verbal", "Negligencia");
     private final static int LOCATION = 1;
 
     private Toolbar toolbar;
