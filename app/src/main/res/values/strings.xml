@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TransXela</string>
+    <string name="fa_icon_reported">&#xf05d;</string>
+    <string name="fa_icon_inprocess">&#xf12a;</string>
+    <string name="fa_icon_denied">&#xf017;</string>
+    <string name="fa_icon_arrow">&#xf061;</string>
+    <string name="icon_denied">&#xf057;</string>
 </resources>

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#5677fc</color>
+    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorAccent">#40c4ff</color>
+    <color name="white">#FFFFFF</color>
+    <color name="splashBackground">#40c4ff</color>
+    <color name="backgroundControls">#F1F1F1</color>
+    <color name="textControls">#6A6A6A</color>
+    <color name="hintControls">#9E9E9E</color>
+    <color name="tintControls">#C6C6C6</color>
+    <color name="baseBackgroud">#E6E6E6</color>
+
+    <color name="denunciaDenied">#FFAB40</color>
+    <color name="denunciaInProccess">#FFEA51</color>
+    <color name="denunciaReported">#2BD853</color>
+    <color name="locationFalse">#F56960</color>
 </resources>

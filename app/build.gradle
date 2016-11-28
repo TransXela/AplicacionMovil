@@ -20,7 +20,20 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
+    //UI
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.github.florent37:materialtextfield:1.0.6'
+    compile 'com.jaredrummler:material-spinner:1.1.0'
+    compile 'info.hoang8f:fbutton:1.0.5'
+    //Maps
+    compile 'com.google.android.gms:play-services:9.6.1'
+    //HTTP
+    compile 'com.amitshekhar.android:android-networking:0.2.0'
+    //CACHE
+    compile 'com.vincentbrison.openlibraries.android:dualcache:3.0.0'
 }

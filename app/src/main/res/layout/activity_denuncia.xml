@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E6E6E6"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/denunciaToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/denunciaToolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="25dp">
+
+            <TextView
+                android:id="@+id/labelPlaca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Numero de placa"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp" />
+
+            <RelativeLayout
+                android:id="@+id/placaContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/labelPlaca"
+                android:layout_below="@id/labelPlaca"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp">
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/placaType"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textControls"
+                    android:textColorHint="@color/hintControls"
+                    app:ms_background_color="@color/backgroundControls" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/placaNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/placaType"
+                    android:layout_alignTop="@id/placaType"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/placaType"
+                    android:background="@drawable/edittext_shape"
+                    android:hint="Numero"
+                    android:textColor="@color/textControls"
+                    android:textColorHint="@color/hintControls"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/labelTypeDenuncia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/placaContainer"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Tipo de denuncia"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp" />
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/denunciaType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/labelTypeDenuncia"
+                android:layout_alignRight="@id/placaContainer"
+                android:layout_below="@id/labelTypeDenuncia"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/textControls"
+                android:textColorHint="@color/hintControls"
+                app:ms_background_color="@color/backgroundControls" />
+
+            <TextView
+                android:id="@+id/labelDescriptionDenuncia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/denunciaType"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Descripcion"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp" />
+
+            <EditText
+                android:id="@+id/denunciaDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelDescriptionDenuncia"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/edittext_shape"
+                android:hint="Agregue una descripcion"
+                android:lines="5"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/textControls"
+                android:textColorHint="@color/hintControls" />
+
+            <TextView
+                android:id="@+id/labelLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/denunciaDescription"
+                android:layout_marginLeft="25dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Ubicacion"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp" />
+
+            <info.hoang8f.widget.FButton
+                android:id="@+id/getLocationButton"
+                android:layout_width="145dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelLocation"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:text="Obtener"
+                android:textColor="@color/white"
+                android:drawableLeft="@mipmap/ic_location_searching_white_24dp"
+                android:drawablePadding="0dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                fbutton:buttonColor="@color/colorPrimary"
+                fbutton:cornerRadius="5dp"
+                fbutton:shadowColor="@color/hintControls"
+                fbutton:shadowHeight="5dp" />
+
+            <info.hoang8f.widget.FButton
+                android:id="@+id/setLocationButton"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/labelLocation"
+                android:layout_toRightOf="@id/getLocationButton"
+                android:layout_alignRight="@id/denunciaDescription"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:text="Seleccionar"
+                android:textColor="@color/white"
+                android:drawableLeft="@mipmap/ic_location_on_white_24dp"
+                android:drawablePadding="0dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                fbutton:buttonColor="@color/colorPrimary"
+                fbutton:cornerRadius="5dp"
+                fbutton:shadowColor="@color/hintControls"
+                fbutton:shadowHeight="5dp" />
+
+            <TextView
+                android:id="@+id/locationStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/icon_denied"
+                android:textSize="40sp"
+                android:textColor="@color/locationFalse"
+                android:layout_above="@+id/getLocationButton"
+                android:layout_toRightOf="@+id/getLocationButton"
+                android:layout_toEndOf="@+id/getLocationButton"
+                android:layout_alignTop="@+id/labelLocation" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
