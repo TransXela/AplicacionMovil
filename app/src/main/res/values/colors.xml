@@ -14,4 +14,5 @@
     <color name="denunciaDenied">#FFAB40</color>
     <color name="denunciaInProccess">#FFEA51</color>
     <color name="denunciaReported">#2BD853</color>
+    <color name="locationFalse">#F56960</color>
 </resources>

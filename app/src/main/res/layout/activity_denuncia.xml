@@ -176,6 +176,18 @@
                 fbutton:shadowColor="@color/hintControls"
                 fbutton:shadowHeight="5dp" />
 
+            <TextView
+                android:id="@+id/locationStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/icon_denied"
+                android:textSize="40sp"
+                android:textColor="@color/locationFalse"
+                android:layout_above="@+id/getLocationButton"
+                android:layout_toRightOf="@+id/getLocationButton"
+                android:layout_toEndOf="@+id/getLocationButton"
+                android:layout_alignTop="@+id/labelLocation" />
+
         </RelativeLayout>
 
     </ScrollView>

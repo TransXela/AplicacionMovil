@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements Button.OnClickLis
         buttonNewDenuncia.setOnClickListener(this);
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         preferenceseditor = preferences.edit();
-        saveImei();
         obtenerImei();
 }
 
