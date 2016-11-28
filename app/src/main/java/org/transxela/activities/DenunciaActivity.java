@@ -218,6 +218,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
+                        Log.d("response", response.toString());
                         try {
                             JSONObject denunciaObject = response.getJSONObject("denuncia");
                             if(denunciaObject.has("token")){
