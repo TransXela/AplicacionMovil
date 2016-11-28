@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -51,6 +52,7 @@ import org.transxela.R;
 import org.transxela.api.Endpoints;
 import org.transxela.models.Denuncia;
 import org.transxela.models.wrappers.DenunciaWrapper;
+import org.transxela.utils.FontManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -74,6 +76,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
     private SharedPreferences preferences;
     private SharedPreferences.Editor preferencesEditor;
     private Denuncia denuncia;
+    private TextView locationStatus;
 
     private AppCompatEditText placaNumber;
     private EditText denunciaDescription;
@@ -104,6 +107,11 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
         });
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         preferencesEditor = preferences.edit();
+
+        locationStatus = (TextView) findViewById(R.id.locationStatus);
+        Typeface iconFont = FontManager.getTypeface(getApplicationContext(), FontManager.FONTAWESOME);
+        FontManager.markAsIconContainer(locationStatus, iconFont);
+
         placaType = (MaterialSpinner) findViewById(R.id.placaType);
         placaType.setItems(SPINNERLIST);
         placaType.setSelectedIndex(0);
@@ -174,8 +182,8 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
             longitud=(float)data.getDoubleExtra("Longitud",0.0);
             latitud=(float)data.getDoubleExtra("Latitud",0.0);
             Log.d("sirve",""+longitud);
-            Toast.makeText(getApplicationContext(),
-                    "Ubicacion obtenida", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Ubicacion obtenida", Toast.LENGTH_SHORT).show();
+            setPositiveStatusLocation();
         }
 
     }
@@ -218,6 +226,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
                     @Override
                     public void onResponse(JSONObject response) {
                         // do anything with response
+                        Log.d("response", response.toString());
                         try {
                             JSONObject denunciaObject = response.getJSONObject("denuncia");
                             if(denunciaObject.has("token")){
@@ -264,6 +273,7 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
             Log.d("yiah","si sirve");
             Toast.makeText(getApplicationContext(),
                     "Ubicacion obtenida", Toast.LENGTH_SHORT).show();
+                    setPositiveStatusLocation();
 
         } else {
             Log.d("ña","no sirver");
@@ -322,6 +332,11 @@ public class DenunciaActivity extends AppCompatActivity implements Button.OnClic
 
             updateUI(lastLocation);
         }
+    }
+
+    private void setPositiveStatusLocation(){
+        locationStatus.setText(getResources().getString(R.string.fa_icon_reported));
+        locationStatus.setTextColor(getResources().getColor(R.color.denunciaReported));
     }
 
 
