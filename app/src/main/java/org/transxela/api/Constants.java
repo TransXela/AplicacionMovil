@@ -15,9 +15,9 @@ public class Constants {
 
     public static int COBROILEGAL = 1;
     public static int MALESTADO = 2;
-    public static int MALOSTRATOS = 3;
-    public static int CONDUCCIONT = 4;
-    public static int SOBRECARGO= 5;
+    public static int SOBRECARGO = 3;
+    public static int ABUSO = 4;
+    public static int NEGLIGENCIA= 5;
 
     public static String getTipoDenuncia(int i){
         String tipo = "";
@@ -25,12 +25,12 @@ public class Constants {
             tipo="Cobro Ilegal";
         if(i == MALESTADO)
             tipo="Unidad en mal estado";
-        if(i == MALOSTRATOS)
-            tipo="Mal trato";
-        if(i == CONDUCCIONT)
-            tipo="Conduccion temeraria";
         if(i == SOBRECARGO)
-            tipo="Unidad sobrecargada";
+            tipo="Unidad Sobrecargada";
+        if(i == ABUSO)
+            tipo="Abuso Verbal";
+        if(i == NEGLIGENCIA)
+            tipo="Negligencia";
         return tipo;
     }
 
