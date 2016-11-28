@@ -32,7 +32,7 @@ public class DenunciaDetailActivity extends AppCompatActivity implements OnMapRe
     protected MapView mMapView;
     protected Denuncia denuncia;
 
-    protected TextView denunciaDate, denunciaType, denunciaStatus, denunciaStatusLabel;
+    protected TextView denunciaDate, denunciaType, denunciaStatus, denunciaStatusLabel, denunciaPlaca, denunciaDescripcion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +53,16 @@ public class DenunciaDetailActivity extends AppCompatActivity implements OnMapRe
         denunciaType = (TextView) findViewById(R.id.denunciaType);
         denunciaStatus = (TextView) findViewById(R.id.denunciaStatus);
         denunciaStatusLabel = (TextView) findViewById(R.id.denunciaStatusLabel);
+        denunciaPlaca = (TextView) findViewById(R.id.denunciaPlaca);
+        denunciaDescripcion = (TextView) findViewById(R.id.denunciaDescripcion);
         mMapView = (MapView) findViewById(R.id.mapview);
 
         Typeface iconFont = FontManager.getTypeface(getApplicationContext(), FontManager.FONTAWESOME);
         FontManager.markAsIconContainer(denunciaStatus, iconFont);
 
         denunciaDate.setText(denuncia.getFechahora());
+        denunciaPlaca.setText(denuncia.getPlaca());
+        denunciaDescripcion.setText(denuncia.getDescripcion());
         denunciaType.setText(Constants.getTipoDenuncia(denuncia.getTipodenuncia()));
         denunciaStatus.setText(getEstadoSymbolDenuncia(denuncia.getEstado()));
         denunciaStatus.setTextColor(getEstadoColorDenuncia(denuncia.getEstado()));
